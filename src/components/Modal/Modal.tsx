@@ -1,15 +1,13 @@
 import { createPortal } from "react-dom";
 import { useEffect, type MouseEvent } from "react";
-import type { Note } from "../types/note";
 import css from "./Modal.module.css";
 
 interface ModalProps {
-  note: Note;
   onClose: () => void;
+  children?: React.ReactNode;
 }
 
-export default function Modal({ note, onClose }: ModalProps) {
-  const { title, overview, release_date, vote_average, poster_path } = note;
+export default function Modal({ onClose, children }: ModalProps) {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -45,7 +43,9 @@ export default function Modal({ note, onClose }: ModalProps) {
       role="dialog"
       aria-modal="true"
     >
-      <div className={css.modal}>{/* */}</div>
+      <div className={css.modal}>
+        {children}
+      </div>
     </div>,
     document.body
   );
