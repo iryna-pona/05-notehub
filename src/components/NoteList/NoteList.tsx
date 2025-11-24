@@ -16,7 +16,7 @@ export default function NoteList({ notes }: NoteListProps) {
       queryClient.invalidateQueries({ queryKey: ["notes"] }); // оновлюємо кеш
     },
   });
-
+             
   if (!notes.length) return null;
 
   return (
