@@ -46,6 +46,13 @@ export default function App() {
     <div className={css.app}>
       <header className={css.toolbar}>
         <SearchBox value={search} onChange={handleSearch} />
+        {data?.totalPages && data.totalPages > 1 && (
+            <Pagination
+              pageCount={data.totalPages}
+              currentPage={page}
+              onPageChange={setPage}
+            />
+          )}
         <button className={css.button} onClick={handleOpenModal}>
           Create note +
         </button>
@@ -57,14 +64,6 @@ export default function App() {
       {!isLoading && !isError && data?.notes && (
         <>
           <NoteList notes={data.notes} />
-
-          {data.totalPages > 1 && (
-            <Pagination
-              pageCount={data.totalPages}
-              currentPage={page}
-              onPageChange={setPage}
-            />
-          )}
         </>
       )}
 
