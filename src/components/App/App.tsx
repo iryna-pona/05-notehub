@@ -28,7 +28,7 @@ export default function App() {
   
   const { data, isLoading, isError } = useQuery<FetchNotesResponse, Error>({
     queryKey: ["notes", debouncedSearch, page],
-    queryFn: () => fetchNotes({ search: debouncedSearch, page }),
+    queryFn: () => fetchNotes({ search: debouncedSearch, page, perPage: 12 }),
     placeholderData: (prev) => prev,
   });
 
@@ -49,6 +49,13 @@ export default function App() {
     <div className={css.app}>
       <header className={css.toolbar}>
         <SearchBox value={search} onChange={handleSearch} />
+        {data?.totalPages && data.totalPages > 1 && (
+        <Pagination
+          pageCount={data.totalPages}
+          currentPage={page}
+          onPageChange={setPage}
+        />
+        )}
         <button className={css.button} onClick={() => setIsModalOpen(true)}>
           Create note +
         </button>
@@ -58,14 +65,6 @@ export default function App() {
       {isError && <ErrorMessage />}
 
       {data?.notes && <NoteList notes={data.notes} onDelete={handleDelete} />}
-
-      {data?.totalPages && data.totalPages > 1 && (
-        <Pagination
-          pageCount={data.totalPages}
-          currentPage={page}
-          onPageChange={setPage}
-        />
-      )}
 
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>

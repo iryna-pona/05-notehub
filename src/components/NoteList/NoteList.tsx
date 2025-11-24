@@ -29,4 +29,3 @@ export default function NoteList({ notes, onDelete }: NoteListProps) {
     </ul>
   );
 }
-
